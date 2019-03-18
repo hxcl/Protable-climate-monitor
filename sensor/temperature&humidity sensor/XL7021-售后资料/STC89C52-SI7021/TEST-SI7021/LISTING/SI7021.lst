@@ -1,0 +1,833 @@
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE SI7021
+OBJECT MODULE PLACED IN ..\OUT\SI7021.obj
+COMPILER INVOKED BY: e:\Keil\C51\BIN\C51.EXE ..\HARDWARE\SI7021\SI7021.c BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMB
+                    -OLS PRINT(..\LISTING\SI7021.lst) TABS(2) OBJECT(..\OUT\SI7021.obj)
+
+line level    source
+
+   1          #include "SI7021.h"
+   1      =1  #ifndef _SI7021_H
+   2      =1  #define _SI7021_H
+   3      =1  
+   4      =1  #include "..\..\myType.h"
+   1      =2  
+   2      =2  #ifndef __myType_H
+   3      =2  #define __myType_H
+   4      =2  
+   5      =2  typedef unsigned char u8;
+   6      =2  typedef signed char s8;
+   7      =2  typedef unsigned int u16;
+   8      =2  typedef signed int s16;
+   9      =2  typedef long l32;
+  10      =2  typedef float f32;
+  11      =2  
+  12      =2  typedef union union16_{
+  13      =2    unsigned int uint;
+  14      =2    unsigned char uchar[2];
+  15      =2  }union16;
+  16      =2  typedef union union32_{
+  17      =2    long _long;
+  18      =2    unsigned int uint[2];
+  19      =2    unsigned char uchar[4];
+  20      =2  }union32;
+  21      =2  
+  22      =2  #define HSB 0
+  23      =2  #define LSB 1
+  24      =2  
+  25      =2  #define BIT_HIGH  1
+  26      =2  #define BIT_LOW   0
+  27      =2  
+  28      =2  #endif//ifndef  __myType_H
+  29      =2  
+  30      =2  
+  31      =2  
+  32      =2  
+   5      =1  #include <reg52.h> 
+   1      =2  /*--------------------------------------------------------------------------
+   2      =2  REG52.H
+   3      =2  
+   4      =2  Header file for generic 80C52 and 80C32 microcontroller.
+   5      =2  Copyright (c) 1988-2002 Keil Elektronik GmbH and Keil Software, Inc.
+   6      =2  All rights reserved.
+   7      =2  --------------------------------------------------------------------------*/
+   8      =2  
+   9      =2  #ifndef __REG52_H__
+  10      =2  #define __REG52_H__
+  11      =2  
+  12      =2  /*  BYTE Registers  */
+  13      =2  sfr P0    = 0x80;
+  14      =2  sfr P1    = 0x90;
+  15      =2  sfr P2    = 0xA0;
+  16      =2  sfr P3    = 0xB0;
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 2   
+
+  17      =2  sfr PSW   = 0xD0;
+  18      =2  sfr ACC   = 0xE0;
+  19      =2  sfr B     = 0xF0;
+  20      =2  sfr SP    = 0x81;
+  21      =2  sfr DPL   = 0x82;
+  22      =2  sfr DPH   = 0x83;
+  23      =2  sfr PCON  = 0x87;
+  24      =2  sfr TCON  = 0x88;
+  25      =2  sfr TMOD  = 0x89;
+  26      =2  sfr TL0   = 0x8A;
+  27      =2  sfr TL1   = 0x8B;
+  28      =2  sfr TH0   = 0x8C;
+  29      =2  sfr TH1   = 0x8D;
+  30      =2  sfr IE    = 0xA8;
+  31      =2  sfr IP    = 0xB8;
+  32      =2  sfr SCON  = 0x98;
+  33      =2  sfr SBUF  = 0x99;
+  34      =2  
+  35      =2  /*  8052 Extensions  */
+  36      =2  sfr T2CON  = 0xC8;
+  37      =2  sfr RCAP2L = 0xCA;
+  38      =2  sfr RCAP2H = 0xCB;
+  39      =2  sfr TL2    = 0xCC;
+  40      =2  sfr TH2    = 0xCD;
+  41      =2  
+  42      =2  
+  43      =2  /*  BIT Registers  */
+  44      =2  /*  PSW  */
+  45      =2  sbit CY    = PSW^7;
+  46      =2  sbit AC    = PSW^6;
+  47      =2  sbit F0    = PSW^5;
+  48      =2  sbit RS1   = PSW^4;
+  49      =2  sbit RS0   = PSW^3;
+  50      =2  sbit OV    = PSW^2;
+  51      =2  sbit P     = PSW^0; //8052 only
+  52      =2  
+  53      =2  /*  TCON  */
+  54      =2  sbit TF1   = TCON^7;
+  55      =2  sbit TR1   = TCON^6;
+  56      =2  sbit TF0   = TCON^5;
+  57      =2  sbit TR0   = TCON^4;
+  58      =2  sbit IE1   = TCON^3;
+  59      =2  sbit IT1   = TCON^2;
+  60      =2  sbit IE0   = TCON^1;
+  61      =2  sbit IT0   = TCON^0;
+  62      =2  
+  63      =2  /*  IE  */
+  64      =2  sbit EA    = IE^7;
+  65      =2  sbit ET2   = IE^5; //8052 only
+  66      =2  sbit ES    = IE^4;
+  67      =2  sbit ET1   = IE^3;
+  68      =2  sbit EX1   = IE^2;
+  69      =2  sbit ET0   = IE^1;
+  70      =2  sbit EX0   = IE^0;
+  71      =2  
+  72      =2  /*  IP  */
+  73      =2  sbit PT2   = IP^5;
+  74      =2  sbit PS    = IP^4;
+  75      =2  sbit PT1   = IP^3;
+  76      =2  sbit PX1   = IP^2;
+  77      =2  sbit PT0   = IP^1;
+  78      =2  sbit PX0   = IP^0;
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 3   
+
+  79      =2  
+  80      =2  /*  P3  */
+  81      =2  sbit RD    = P3^7;
+  82      =2  sbit WR    = P3^6;
+  83      =2  sbit T1    = P3^5;
+  84      =2  sbit T0    = P3^4;
+  85      =2  sbit INT1  = P3^3;
+  86      =2  sbit INT0  = P3^2;
+  87      =2  sbit TXD   = P3^1;
+  88      =2  sbit RXD   = P3^0;
+  89      =2  
+  90      =2  /*  SCON  */
+  91      =2  sbit SM0   = SCON^7;
+  92      =2  sbit SM1   = SCON^6;
+  93      =2  sbit SM2   = SCON^5;
+  94      =2  sbit REN   = SCON^4;
+  95      =2  sbit TB8   = SCON^3;
+  96      =2  sbit RB8   = SCON^2;
+  97      =2  sbit TI    = SCON^1;
+  98      =2  sbit RI    = SCON^0;
+  99      =2  
+ 100      =2  /*  P1  */
+ 101      =2  sbit T2EX  = P1^1; // 8052 only
+ 102      =2  sbit T2    = P1^0; // 8052 only
+ 103      =2               
+ 104      =2  /*  T2CON  */
+ 105      =2  sbit TF2    = T2CON^7;
+ 106      =2  sbit EXF2   = T2CON^6;
+ 107      =2  sbit RCLK   = T2CON^5;
+ 108      =2  sbit TCLK   = T2CON^4;
+ 109      =2  sbit EXEN2  = T2CON^3;
+ 110      =2  sbit TR2    = T2CON^2;
+ 111      =2  sbit C_T2   = T2CON^1;
+ 112      =2  sbit CP_RL2 = T2CON^0;
+ 113      =2  
+ 114      =2  #endif
+   6      =1  
+   7      =1  
+   8      =1  //sbit  SI7021_SCLK = P3^4;
+   9      =1  //sbit  SI7021_SDA  = P3^3;
+  10      =1  sbit  SI7021_SCLK = P1^0;
+  11      =1  sbit  SI7021_SDA  = P1^1;
+  12      =1  
+  13      =1  #define WRITE_CMD   0x80
+  14      =1  #define READ_CDM    0x81
+  15      =1  #define SALVE_ADDR    0x80
+  16      =1  
+  17      =1  #define HUMI_HOLD_MASTER  0xE5
+  18      =1  #define TEMP_HOLD_MASTER  0xE3
+  19      =1      
+  20      =1  #define HUMI_NOHOLD_MASTER  0xF5
+  21      =1  #define TEMP_NOHOLD_MASTER  0xF3
+  22      =1  
+  23      =1  #define SI7021_SCLK_HIGH()  SI7021_SCLK = BIT_HIGH
+  24      =1  #define SI7021_SCLK_LOW() SI7021_SCLK = BIT_LOW
+  25      =1  
+  26      =1  #define SI7021_SDA_HIGH() SI7021_SDA = BIT_HIGH
+  27      =1  #define SI7021_SDA_LOW()  SI7021_SDA = BIT_LOW
+  28      =1  
+  29      =1  
+  30      =1  void measure_si7021 ( unsigned char model, union16 *value );
+  31      =1  
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 4   
+
+  32      =1  
+  33      =1  
+  34      =1  #endif//ifndef  _SI7021_H
+   2          
+   3          #include <intrins.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  INTRINS.H
+   3      =1  
+   4      =1  Intrinsic functions for C51.
+   5      =1  Copyright (c) 1988-2010 Keil Elektronik GmbH and ARM Germany GmbH
+   6      =1  All rights reserved.
+   7      =1  --------------------------------------------------------------------------*/
+   8      =1  
+   9      =1  #ifndef __INTRINS_H__
+  10      =1  #define __INTRINS_H__
+  11      =1  
+  12      =1  #pragma SAVE
+  13      =1  
+  14      =1  #if defined (__CX2__)
+           =1 #pragma FUNCTIONS(STATIC)
+           =1 /* intrinsic functions are reentrant, but need static attribute */
+           =1 #endif
+  18      =1  
+  19      =1  extern void          _nop_     (void);
+  20      =1  extern bit           _testbit_ (bit);
+  21      =1  extern unsigned char _cror_    (unsigned char, unsigned char);
+  22      =1  extern unsigned int  _iror_    (unsigned int,  unsigned char);
+  23      =1  extern unsigned long _lror_    (unsigned long, unsigned char);
+  24      =1  extern unsigned char _crol_    (unsigned char, unsigned char);
+  25      =1  extern unsigned int  _irol_    (unsigned int,  unsigned char);
+  26      =1  extern unsigned long _lrol_    (unsigned long, unsigned char);
+  27      =1  extern unsigned char _chkfloat_(float);
+  28      =1  #if defined (__CX2__)
+           =1 extern int           abs       (int);
+           =1 #endif
+  31      =1  #if !defined (__CX2__)
+  32      =1  extern void          _push_    (unsigned char _sfr);
+  33      =1  extern void          _pop_     (unsigned char _sfr);
+  34      =1  #endif
+  35      =1  
+  36      =1  #pragma RESTORE
+  37      =1  
+  38      =1  #endif
+  39      =1  
+   4          
+   5          
+   6          void delay_x_us ( void )//(1+2)*60=180指令周期 180us
+   7          {
+   8   1        char x=60;
+   9   1        for ( ; x>0; x-- )
+  10   1          _nop_();
+  11   1      }       
+  12                                                                    
+  13          //函数名称： start_i2c
+  14          //函数功能： i2c 发送起始条件
+  15          //参数描述：
+  16          // 返 回 值：
+  17          void start_i2c ( void )
+  18          {
+  19   1        SI7021_SDA_HIGH();  
+  20   1        delay_x_us();
+  21   1        SI7021_SCLK_HIGH();   
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 5   
+
+  22   1        delay_x_us();     
+  23   1        SI7021_SDA_LOW();   
+  24   1        delay_x_us();     
+  25   1        SI7021_SCLK_LOW(); 
+  26   1        delay_x_us();
+  27   1      }
+  28          //函数名称： stop_i2c
+  29          //函数功能： i2c 发送结束条件
+  30          //参数描述：
+  31          // 返 回 值：
+  32          void stop_i2c ( void )
+  33          {
+  34   1        SI7021_SDA_LOW(); 
+  35   1        delay_x_us();  
+  36   1        SI7021_SCLK_HIGH(); 
+  37   1        delay_x_us();
+  38   1        SI7021_SDA_HIGH(); 
+  39   1        delay_x_us();
+  40   1      }
+  41          //函数名称： send_1byte
+  42          //函数功能： 写一个字节到si7021芯片
+  43          //参数描述：
+  44          // 返 回 值：
+  45          bit send_1byte ( unsigned char send_data )
+  46          {
+  47   1        unsigned char bit_cnt;
+  48   1        bit b_ack=0;
+  49   1        unsigned char i=200;
+  50   1        
+  51   1        for( bit_cnt=0; bit_cnt<8; bit_cnt++ ) 
+  52   1        { 
+  53   2             SI7021_SCLK_LOW(); 
+  54   2             if ( (send_data<<bit_cnt)&0x80 ) 
+  55   2            SI7021_SDA_HIGH();  
+  56   2             else SI7021_SDA_LOW();  
+  57   2           delay_x_us();              
+  58   2             SI7021_SCLK_HIGH();       
+  59   2             delay_x_us();           
+  60   2        }
+  61   1      
+  62   1        delay_x_us();
+  63   1        SI7021_SCLK_LOW();
+  64   1        SI7021_SDA_HIGH();        //
+  65   1        delay_x_us();
+  66   1        
+  67   1      
+  68   1        delay_x_us(); 
+  69   1        SI7021_SCLK_HIGH();
+  70   1        delay_x_us();
+  71   1         
+  72   1        i = 200;
+  73   1        while ( i-- )
+  74   1        {
+  75   2          delay_x_us();
+  76   2          if(SI7021_SDA==0)
+  77   2          {
+  78   3            b_ack = 1;
+  79   3            break;
+  80   3          }  
+  81   2        }
+  82   1      
+  83   1        if ( i == 0 ) b_ack = 0; 
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 6   
+
+  84   1                
+  85   1        SI7021_SCLK_LOW();
+  86   1        delay_x_us ();
+  87   1      
+  88   1        return b_ack;
+  89   1      }
+  90          
+  91          //函数名称： read_1byte
+  92          //函数功能： 从si7021读取一个字节
+  93          //参数描述：
+  94          // 返 回 值：
+  95          unsigned char read_1byte ( void )
+  96          {
+  97   1        unsigned char read_value=0;
+  98   1        unsigned char bit_cnt;
+  99   1      
+ 100   1        for ( bit_cnt=0; bit_cnt<8; bit_cnt++ )
+ 101   1        {          
+ 102   2             SI7021_SCLK_HIGH();       
+ 103   2             delay_x_us();
+ 104   2           read_value <<= 1;
+ 105   2      
+ 106   2             if ( SI7021_SDA==1 ) 
+ 107   2            read_value +=1;
+ 108   2      
+ 109   2             SI7021_SCLK_LOW();
+ 110   2        }
+ 111   1        return (read_value);
+ 112   1      }
+ 113          //函数名称：master_i2c_ack
+ 114          //函数功能：MCU应答从器件
+ 115          //参数描述：
+ 116          // 返 回 值：
+ 117          void master_i2c_ack ( void )
+ 118          {
+ 119   1        SI7021_SDA_LOW();   
+ 120   1        delay_x_us();
+ 121   1        SI7021_SCLK_LOW();
+ 122   1        delay_x_us();      
+ 123   1        SI7021_SCLK_HIGH();
+ 124   1        delay_x_us();
+ 125   1        SI7021_SCLK_LOW();    
+ 126   1        delay_x_us(); 
+ 127   1        SI7021_SDA_HIGH();
+ 128   1        delay_x_us();
+ 129   1      }
+ 130          //函数名称：master_i2c_noack
+ 131          //函数功能：MCU不发送应答信号到从器件
+ 132          //参数描述：
+ 133          // 返 回 值：
+ 134          void master_i2c_noack ( void )
+ 135          {
+ 136   1        SI7021_SDA_HIGH(); 
+ 137   1        delay_x_us();      
+ 138   1        SI7021_SCLK_HIGH();
+ 139   1        delay_x_us();
+ 140   1        SI7021_SCLK_LOW(); 
+ 141   1      }
+ 142          //函数名称：measure_si7021
+ 143          //函数功能：HOLD MASTER模式下读取温湿度 
+ 144          //参数描述：
+ 145          // 返 回 值：
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 7   
+
+ 146          void measure_si7021 ( unsigned char model, union16 *value )
+ 147          {
+ 148   1        int i;
+ 149   1        //发起始信号
+ 150   1        start_i2c();               
+ 151   1        if ( 0== send_1byte ( SALVE_ADDR ) )//写slave addr
+ 152   1        {
+ 153   2          value->uint = 0xAABB;
+ 154   2          return ;
+ 155   2        }
+ 156   1      
+ 157   1        if ( 0 == send_1byte( model ) )//measure cmd
+ 158   1        {
+ 159   2          value->uint = 0x1234;
+ 160   2          return ;
+ 161   2        }
+ 162   1        //默认湿度转换时间为10~12ms 温度 6~10ms  
+ 163   1        i = 600;  //600*180=108ms 非准确延时
+ 164   1        while ( i-- )
+ 165   1          delay_x_us ();  //温湿度数据转换延时等待（延时参照手册，此处仅为测试）
+ 166   1      
+ 167   1        start_i2c ();       //重新发起始信号
+ 168   1        if ( 0==send_1byte(SALVE_ADDR+1) ) //读命令
+ 169   1        {
+ 170   2          value->uint = 0x3456;
+ 171   2          return ;
+ 172   2        }
+ 173   1      
+ 174   1        value->uchar[HSB] = read_1byte ();//读取温湿度的高位字节
+ 175   1        //mcu应答
+ 176   1        master_i2c_ack ();
+ 177   1        value->uchar[LSB] = read_1byte ();//读取温湿度的低位字节数据
+ 178   1        //mcu无应答
+ 179   1        master_i2c_noack ();
+ 180   1        
+ 181   1        //mcu应答->read_1byte()读取校验值->mcu无应答
+ 182   1      
+ 183   1        //发送停止位
+ 184   1      //  value->uint = 0x7890;
+ 185   1        stop_i2c ();
+ 186   1      }
+ 187          
+ 188          
+ 189          
+ 190          
+ 191          
+ 192          
+ 193          
+ 194          
+ 195          
+ 196          
+ 197          
+ 198          
+ 199          
+ 200          
+ 201          
+ 202          
+ 203          
+ 204          
+ 205          
+ 206          
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 8   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION L?0035 (BEGIN)
+0000 D291              SETB    SI7021_SDA
+0002         L?0036:
+0002 120000      R     LCALL   delay_x_us
+0005 D290              SETB    SI7021_SCLK
+             ; FUNCTION delay_x_us (BEGIN)
+                                           ; SOURCE LINE # 6
+                                           ; SOURCE LINE # 7
+                                           ; SOURCE LINE # 8
+;---- Variable 'x' assigned to Register 'R7' ----
+0007 7F3C              MOV     R7,#03CH
+                                           ; SOURCE LINE # 9
+0009         ?C0001:
+                                           ; SOURCE LINE # 10
+0009 00                NOP     
+000A DFFD              DJNZ    R7,?C0001
+                                           ; SOURCE LINE # 11
+000C         ?C0004:
+000C 22                RET     
+             ; FUNCTION delay_x_us (END)
+
+             ; FUNCTION start_i2c (BEGIN)
+                                           ; SOURCE LINE # 17
+                                           ; SOURCE LINE # 18
+                                           ; SOURCE LINE # 19
+                                           ; SOURCE LINE # 20
+                                           ; SOURCE LINE # 21
+                                           ; SOURCE LINE # 22
+0000 120000      R     LCALL   L?0035
+                                           ; SOURCE LINE # 23
+0003 C291              CLR     SI7021_SDA
+                                           ; SOURCE LINE # 24
+0005 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 25
+0008 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 26
+000A 020000      R     LJMP    delay_x_us
+             ; FUNCTION start_i2c (END)
+
+             ; FUNCTION stop_i2c (BEGIN)
+                                           ; SOURCE LINE # 32
+                                           ; SOURCE LINE # 33
+                                           ; SOURCE LINE # 34
+0000 C291              CLR     SI7021_SDA
+                                           ; SOURCE LINE # 35
+                                           ; SOURCE LINE # 36
+                                           ; SOURCE LINE # 37
+0002 120000      R     LCALL   L?0036
+                                           ; SOURCE LINE # 38
+0005 D291              SETB    SI7021_SDA
+                                           ; SOURCE LINE # 39
+0007 020000      R     LJMP    delay_x_us
+             ; FUNCTION stop_i2c (END)
+
+             ; FUNCTION _send_1byte (BEGIN)
+                                           ; SOURCE LINE # 45
+;---- Variable 'send_data' assigned to Register 'R6' ----
+0000 AE07              MOV     R6,AR7
+                                           ; SOURCE LINE # 46
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 9   
+
+                                           ; SOURCE LINE # 48
+0002 C200        R     CLR     b_ack
+                                           ; SOURCE LINE # 49
+;---- Variable 'i' assigned to Register 'R5' ----
+0004 7DC8              MOV     R5,#0C8H
+                                           ; SOURCE LINE # 51
+;---- Variable 'bit_cnt' assigned to Register 'R4' ----
+0006 E4                CLR     A
+0007 FC                MOV     R4,A
+0008         ?C0007:
+                                           ; SOURCE LINE # 52
+                                           ; SOURCE LINE # 53
+0008 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 54
+000A EE                MOV     A,R6
+000B A804              MOV     R0,AR4
+000D 08                INC     R0
+000E 8002              SJMP    ?C0031
+0010         ?C0030:
+0010 C3                CLR     C
+0011 33                RLC     A
+0012         ?C0031:
+0012 D8FC              DJNZ    R0,?C0030
+0014 30E704            JNB     ACC.7,?C0010
+                                           ; SOURCE LINE # 55
+0017 D291              SETB    SI7021_SDA
+0019 8002              SJMP    ?C0011
+001B         ?C0010:
+                                           ; SOURCE LINE # 56
+001B C291              CLR     SI7021_SDA
+001D         ?C0011:
+                                           ; SOURCE LINE # 57
+                                           ; SOURCE LINE # 58
+                                           ; SOURCE LINE # 59
+001D 120000      R     LCALL   L?0036
+                                           ; SOURCE LINE # 60
+0020 0C                INC     R4
+0021 BC08E4            CJNE    R4,#08H,?C0007
+0024         ?C0008:
+                                           ; SOURCE LINE # 62
+0024 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 63
+0027 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 64
+0029 D291              SETB    SI7021_SDA
+                                           ; SOURCE LINE # 65
+002B 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 68
+                                           ; SOURCE LINE # 69
+                                           ; SOURCE LINE # 70
+002E 120000      R     LCALL   L?0036
+                                           ; SOURCE LINE # 72
+0031 7DC8              MOV     R5,#0C8H
+0033         ?C0012:
+                                           ; SOURCE LINE # 73
+0033 AF05              MOV     R7,AR5
+0035 1D                DEC     R5
+0036 EF                MOV     A,R7
+0037 6008              JZ      ?C0013
+                                           ; SOURCE LINE # 74
+                                           ; SOURCE LINE # 75
+0039 120000      R     LCALL   delay_x_us
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 10  
+
+                                           ; SOURCE LINE # 76
+003C 2091F4            JB      SI7021_SDA,?C0012
+                                           ; SOURCE LINE # 77
+                                           ; SOURCE LINE # 78
+003F D200        R     SETB    b_ack
+                                           ; SOURCE LINE # 79
+                                           ; SOURCE LINE # 80
+                                           ; SOURCE LINE # 81
+0041         ?C0013:
+                                           ; SOURCE LINE # 83
+0041 ED                MOV     A,R5
+0042 7002              JNZ     ?C0015
+0044 C200        R     CLR     b_ack
+0046         ?C0015:
+                                           ; SOURCE LINE # 85
+0046 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 86
+0048 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 88
+004B A200        R     MOV     C,b_ack
+                                           ; SOURCE LINE # 89
+004D         ?C0016:
+004D 22                RET     
+             ; FUNCTION _send_1byte (END)
+
+             ; FUNCTION read_1byte (BEGIN)
+                                           ; SOURCE LINE # 95
+                                           ; SOURCE LINE # 96
+                                           ; SOURCE LINE # 97
+;---- Variable 'read_value' assigned to Register 'R6' ----
+0000 E4                CLR     A
+0001 FE                MOV     R6,A
+                                           ; SOURCE LINE # 100
+;---- Variable 'bit_cnt' assigned to Register 'R5' ----
+0002 FD                MOV     R5,A
+0003         ?C0017:
+                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 102
+0003 D290              SETB    SI7021_SCLK
+                                           ; SOURCE LINE # 103
+0005 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 104
+0008 EE                MOV     A,R6
+0009 25E0              ADD     A,ACC
+000B FE                MOV     R6,A
+                                           ; SOURCE LINE # 106
+000C 309101            JNB     SI7021_SDA,?C0020
+                                           ; SOURCE LINE # 107
+000F 0E                INC     R6
+0010         ?C0020:
+                                           ; SOURCE LINE # 109
+0010 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 110
+0012 0D                INC     R5
+0013 BD08ED            CJNE    R5,#08H,?C0017
+0016         ?C0018:
+                                           ; SOURCE LINE # 111
+0016 AF06              MOV     R7,AR6
+                                           ; SOURCE LINE # 112
+0018         ?C0021:
+0018 22                RET     
+             ; FUNCTION read_1byte (END)
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 11  
+
+
+             ; FUNCTION master_i2c_ack (BEGIN)
+                                           ; SOURCE LINE # 117
+                                           ; SOURCE LINE # 118
+                                           ; SOURCE LINE # 119
+0000 C291              CLR     SI7021_SDA
+                                           ; SOURCE LINE # 120
+0002 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 121
+0005 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 122
+                                           ; SOURCE LINE # 123
+                                           ; SOURCE LINE # 124
+0007 120000      R     LCALL   L?0036
+                                           ; SOURCE LINE # 125
+000A C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 126
+000C 120000      R     LCALL   delay_x_us
+                                           ; SOURCE LINE # 127
+000F D291              SETB    SI7021_SDA
+                                           ; SOURCE LINE # 128
+0011 020000      R     LJMP    delay_x_us
+             ; FUNCTION master_i2c_ack (END)
+
+             ; FUNCTION master_i2c_noack (BEGIN)
+                                           ; SOURCE LINE # 134
+                                           ; SOURCE LINE # 135
+                                           ; SOURCE LINE # 136
+                                           ; SOURCE LINE # 137
+                                           ; SOURCE LINE # 138
+                                           ; SOURCE LINE # 139
+0000 120000      R     LCALL   L?0035
+                                           ; SOURCE LINE # 140
+0003 C290              CLR     SI7021_SCLK
+                                           ; SOURCE LINE # 141
+0005 22                RET     
+             ; FUNCTION master_i2c_noack (END)
+
+             ; FUNCTION _measure_si7021 (BEGIN)
+                                           ; SOURCE LINE # 146
+0000 8F00        R     MOV     model,R7
+;---- Variable 'value' assigned to Register 'R1/R2/R3' ----
+                                           ; SOURCE LINE # 147
+                                           ; SOURCE LINE # 150
+0002 120000      R     LCALL   start_i2c
+                                           ; SOURCE LINE # 151
+0005 7F80              MOV     R7,#080H
+0007 120000      R     LCALL   _send_1byte
+000A 4007              JC      ?C0024
+                                           ; SOURCE LINE # 152
+                                           ; SOURCE LINE # 153
+000C 74AA              MOV     A,#0AAH
+000E 75F0BB            MOV     B,#0BBH
+0011 8030              SJMP    ?C0034
+                                           ; SOURCE LINE # 155
+0013         ?C0024:
+                                           ; SOURCE LINE # 157
+0013 AF00        R     MOV     R7,model
+0015 120000      R     LCALL   _send_1byte
+0018 4007              JC      ?C0026
+                                           ; SOURCE LINE # 158
+                                           ; SOURCE LINE # 159
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 12  
+
+001A 7412              MOV     A,#012H
+001C 75F034            MOV     B,#034H
+001F         ?C0033:
+001F 8022              SJMP    ?C0034
+                                           ; SOURCE LINE # 161
+0021         ?C0026:
+                                           ; SOURCE LINE # 163
+;---- Variable 'i' assigned to Register 'R4/R5' ----
+0021 7D58              MOV     R5,#058H
+0023 7C02              MOV     R4,#02H
+0025         ?C0027:
+                                           ; SOURCE LINE # 164
+0025 ED                MOV     A,R5
+0026 1D                DEC     R5
+0027 AE04              MOV     R6,AR4
+0029 7001              JNZ     ?C0032
+002B 1C                DEC     R4
+002C         ?C0032:
+002C 4E                ORL     A,R6
+002D 6005              JZ      ?C0028
+                                           ; SOURCE LINE # 165
+002F 120000      R     LCALL   delay_x_us
+0032 80F1              SJMP    ?C0027
+0034         ?C0028:
+                                           ; SOURCE LINE # 167
+0034 120000      R     LCALL   start_i2c
+                                           ; SOURCE LINE # 168
+0037 7F81              MOV     R7,#081H
+0039 120000      R     LCALL   _send_1byte
+003C 4008              JC      ?C0029
+                                           ; SOURCE LINE # 169
+                                           ; SOURCE LINE # 170
+003E 7434              MOV     A,#034H
+0040 75F056            MOV     B,#056H
+0043         ?C0034:
+0043 020000      E     LJMP    ?C?ISTPTR
+                                           ; SOURCE LINE # 172
+0046         ?C0029:
+                                           ; SOURCE LINE # 174
+0046 120000      R     LCALL   read_1byte
+0049 EF                MOV     A,R7
+004A 120000      E     LCALL   ?C?CSTPTR
+                                           ; SOURCE LINE # 176
+004D 120000      R     LCALL   master_i2c_ack
+                                           ; SOURCE LINE # 177
+0050 120000      R     LCALL   read_1byte
+0053 900001            MOV     DPTR,#01H
+0056 EF                MOV     A,R7
+0057 120000      E     LCALL   ?C?CSTOPTR
+                                           ; SOURCE LINE # 179
+005A 120000      R     LCALL   master_i2c_noack
+                                           ; SOURCE LINE # 185
+005D 120000      R     LCALL   stop_i2c
+                                           ; SOURCE LINE # 186
+0060         ?C0025:
+0060 22                RET     
+             ; FUNCTION _measure_si7021 (END)
+
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 13  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+_measure_si7021. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  model. . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
+  value. . . . . . . . . . . . . . . .  * REG *  DATA   PTR      0001H  3
+  i. . . . . . . . . . . . . . . . . .  * REG *  DATA   INT      0004H  2
+master_i2c_ack . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+IE . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+start_i2c. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+union32. . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
+  _long. . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  uint . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  uchar. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+union16. . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
+  uint . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  uchar. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+SI7021_SDA . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0091H  1
+stop_i2c . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+s8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+u8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+delay_x_us . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0007H  -----
+  x. . . . . . . . . . . . . . . . . .  * REG *  DATA   CHAR     0007H  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+f32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
+l32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
+s16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
+u16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+master_i2c_noack . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+read_1byte . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  read_value . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0006H  1
+  bit_cnt. . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0005H  1
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+union32_ . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
+  _long. . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  uint . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  uchar. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+union16_ . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  uint . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  uchar. . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+_send_1byte. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  send_data. . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0006H  1
+  bit_cnt. . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0004H  1
+  b_ack. . . . . . . . . . . . . . . .  AUTO     DATA   BIT      0000H  1
+  i. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0005H  1
+SI7021_SCLK. . . . . . . . . . . . . .  ABSBIT   -----  BIT      0090H  1
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    262    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+C51 COMPILER V9.51   SI7021                                                                03/11/2015 10:27:33 PAGE 14  
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

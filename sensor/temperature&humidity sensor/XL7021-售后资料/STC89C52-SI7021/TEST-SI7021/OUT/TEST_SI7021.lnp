@@ -1,0 +1,7 @@
+"..\OUT\USER-MAIN.obj",
+"..\OUT\MCU-STC11L04.obj",
+"..\OUT\SI7021.obj",
+"..\OUT\lcd.obj" 
+TO "..\OUT\TEST_SI7021" 
+PRINT("..\LISTING\TEST_SI7021.m51") IXREF 
+RAMSIZE(256) 
