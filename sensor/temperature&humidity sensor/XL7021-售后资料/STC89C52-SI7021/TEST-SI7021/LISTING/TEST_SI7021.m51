@@ -1,0 +1,721 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/11/2015  10:27:34  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+E:\KEIL\C51\BIN\BL51.EXE ..\OUT\USER-MAIN.obj, ..\OUT\MCU-STC11L04.obj, ..\OUT\SI7021.obj, ..\OUT\lcd.obj TO ..\OUT\TEST
+>> _SI7021 PRINT (..\LISTING\TEST_SI7021.m51) IXREF RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  ..\OUT\USER-MAIN.obj (USER_MAIN)
+  ..\OUT\MCU-STC11L04.obj (MCU_STC11L04)
+  ..\OUT\SI7021.obj (SI7021)
+  ..\OUT\lcd.obj (LCD)
+  E:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?ISTPTR)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?LMUL)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?ULDIV)
+  E:\KEIL\C51\LIB\C51S.LIB (?C?ULSHR)
+  E:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  ..\OUT\TEST_SI7021 (USER_MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0017H     UNIT         ?DT?USER_MAIN
+                    001FH     0001H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     000BH     UNIT         ?DT?MCU_STC11L04
+            DATA    002CH     0005H     UNIT         _DATA_GROUP_
+            IDATA   0031H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001AH     UNIT         ?PR?UART_INTER?MCU_STC11L04
+            CODE    001DH     0006H     UNIT         ?PR?MASTER_I2C_NOACK?SI7021
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     019CH     UNIT         ?C?LIB_CODE
+            CODE    01C2H     016EH     UNIT         ?PR?MAIN?USER_MAIN
+            CODE    0330H     00EAH     UNIT         ?PR?_HEX_TO_ASSIC?LCD
+            CODE    041AH     008CH     UNIT         ?C_C51STARTUP
+            CODE    04A6H     0061H     UNIT         ?PR?_MEASURE_SI7021?SI7021
+            CODE    0507H     004EH     UNIT         ?PR?_SEND_1BYTE?SI7021
+            CODE    0555H     0046H     UNIT         ?PR?INI_LCD?LCD
+            CODE    059BH     0046H     UNIT         ?PR?_LCD_PRINTF_STRING?LCD
+            CODE    05E1H     002DH     UNIT         ?PR?_UART_SEND_BUF?MCU_STC11L04
+            CODE    060EH     0019H     UNIT         ?PR?READ_1BYTE?SI7021
+            CODE    0627H     0016H     UNIT         ?PR?UART_INIT?MCU_STC11L04
+            CODE    063DH     0014H     UNIT         ?PR?MASTER_I2C_ACK?SI7021
+            CODE    0651H     0013H     UNIT         ?PR?_DELAY_2US?LCD
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 2
+
+
+            CODE    0664H     000FH     UNIT         ?PR?LCD_WAIT?LCD
+            CODE    0673H     000EH     UNIT         ?C_INITSEG
+            CODE    0681H     000DH     UNIT         ?PR?DELAY_X_US?SI7021
+            CODE    068EH     000DH     UNIT         ?PR?START_I2C?SI7021
+            CODE    069BH     000AH     UNIT         ?PR?STOP_I2C?SI7021
+            CODE    06A5H     000AH     UNIT         ?PR?_LCD_WRITE_REG?LCD
+            CODE    06AFH     000AH     UNIT         ?PR?_LCD_WRITE_DATA?LCD
+            CODE    06B9H     0009H     UNIT         ?CO?USER_MAIN
+            CODE    06C2H     0008H     UNIT         ?PR?_SEND_DATA?MCU_STC11L04
+
+
+
+OVERLAY MAP OF MODULE:   ..\OUT\TEST_SI7021 (USER_MAIN)
+
+
+SEGMENT                                    BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                   START    LENGTH     START    LENGTH
+---------------------------------------------------------------------------
+?C_C51STARTUP                           -----    -----      -----    -----
+  +--> ?PR?MAIN?USER_MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?USER_MAIN                      -----    -----      -----    -----
+  +--> ?PR?INI_LCD?LCD
+  +--> ?PR?_DELAY_2US?LCD
+  +--> ?PR?UART_INIT?MCU_STC11L04
+  +--> ?PR?_MEASURE_SI7021?SI7021
+  +--> ?PR?_UART_SEND_BUF?MCU_STC11L04
+  +--> ?PR?_HEX_TO_ASSIC?LCD
+  +--> ?PR?_LCD_PRINTF_STRING?LCD
+  +--> ?CO?USER_MAIN
+
+?PR?INI_LCD?LCD                         -----    -----      -----    -----
+  +--> ?PR?_LCD_WRITE_REG?LCD
+  +--> ?PR?LCD_WAIT?LCD
+  +--> ?PR?_DELAY_2US?LCD
+
+?PR?_LCD_WRITE_REG?LCD                  -----    -----      -----    -----
+  +--> ?PR?_DELAY_2US?LCD
+
+?PR?_MEASURE_SI7021?SI7021              -----    -----      002CH    0001H
+  +--> ?PR?START_I2C?SI7021
+  +--> ?PR?_SEND_1BYTE?SI7021
+  +--> ?PR?DELAY_X_US?SI7021
+  +--> ?PR?READ_1BYTE?SI7021
+  +--> ?PR?MASTER_I2C_ACK?SI7021
+  +--> ?PR?MASTER_I2C_NOACK?SI7021
+  +--> ?PR?STOP_I2C?SI7021
+
+?PR?START_I2C?SI7021                    -----    -----      -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+
+?PR?_SEND_1BYTE?SI7021                  0020H.0  0000H.1    -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+
+?PR?READ_1BYTE?SI7021                   -----    -----      -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 3
+
+
+
+?PR?MASTER_I2C_ACK?SI7021               -----    -----      -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+
+?PR?MASTER_I2C_NOACK?SI7021             -----    -----      -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+
+?PR?STOP_I2C?SI7021                     -----    -----      -----    -----
+  +--> ?PR?DELAY_X_US?SI7021
+
+?PR?_UART_SEND_BUF?MCU_STC11L04         -----    -----      002CH    0003H
+  +--> ?PR?_SEND_DATA?MCU_STC11L04
+
+?PR?_HEX_TO_ASSIC?LCD                   -----    -----      002CH    0003H
+
+?PR?_LCD_PRINTF_STRING?LCD              -----    -----      002CH    0005H
+  +--> ?PR?_LCD_WRITE_REG?LCD
+  +--> ?PR?LCD_WAIT?LCD
+  +--> ?PR?_LCD_WRITE_DATA?LCD
+
+?PR?_LCD_WRITE_DATA?LCD                 -----    -----      -----    -----
+  +--> ?PR?_DELAY_2US?LCD
+
+
+
+SYMBOL TABLE OF MODULE:  ..\OUT\TEST_SI7021 (USER_MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        USER_MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:0008H         PUBLIC        cal_temp_u32
+  B:00A8H.7       PUBLIC        EA
+  D:000CH         PUBLIC        cal_temp_u16
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:000EH         PUBLIC        RH_value
+  C:01C2H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:000FH         PUBLIC        Rf_Rec_Cnt
+  D:0010H         PUBLIC        temp_array
+  D:0018H         PUBLIC        TEMP_H
+  D:0019H         PUBLIC        TEMP_L
+  D:001AH         PUBLIC        gv_si7021_value
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:01C2H         LINE#         39
+  C:01C2H         LINE#         40
+  C:01C2H         LINE#         42
+  C:01C5H         LINE#         43
+  C:01CCH         LINE#         58
+  C:01CFH         LINE#         60
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 4
+
+
+  C:01D1H         LINE#         62
+  C:01D1H         LINE#         63
+  C:01D1H         LINE#         66
+  C:01D1H         LINE#         67
+  C:01DCH         LINE#         68
+  C:01E7H         LINE#         69
+  C:01EAH         LINE#         71
+  C:01EAH         LINE#         72
+  C:01EDH         LINE#         73
+  C:01F0H         LINE#         74
+  C:01F3H         LINE#         75
+  C:01F6H         LINE#         76
+  C:0201H         LINE#         79
+  C:0207H         LINE#         80
+  C:020EH         LINE#         81
+  C:0219H         LINE#         83
+  C:0224H         LINE#         84
+  C:023CH         LINE#         85
+  C:0249H         LINE#         86
+  C:024BH         LINE#         87
+  C:0251H         LINE#         89
+  C:025BH         LINE#         90
+  C:0266H         LINE#         93
+  C:026CH         LINE#         94
+  C:0273H         LINE#         95
+  C:027EH         LINE#         96
+  C:0289H         LINE#         97
+  C:02A2H         LINE#         98
+  C:02AFH         LINE#         99
+  C:02C7H         LINE#         100
+  C:02DAH         LINE#         101
+  C:02EFH         LINE#         102
+  C:02FAH         LINE#         103
+  C:0305H         LINE#         105
+  C:0310H         LINE#         107
+  C:031BH         LINE#         108
+  C:0326H         LINE#         111
+  C:032DH         LINE#         112
+  C:032DH         LINE#         113
+  C:032DH         LINE#         114
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        USER_MAIN
+
+  -------         MODULE        MCU_STC11L04
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  D:0021H         PUBLIC        gv_uart_buf
+  B:0098H.1       PUBLIC        TI
+  C:06C2H         PUBLIC        _send_data
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 5
+
+
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0003H         PUBLIC        uart_inter
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  C:0627H         PUBLIC        uart_init
+  B:0088H.6       PUBLIC        TR1
+  D:002BH         PUBLIC        gv_uart_buflen
+  D:00C8H         PUBLIC        T2CON
+  C:05E1H         PUBLIC        _uart_send_buf
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          UART_INIT
+  C:0627H         LINE#         9
+  C:0627H         LINE#         10
+  C:0627H         LINE#         23
+  C:062AH         LINE#         26
+  C:062CH         LINE#         28
+  C:062FH         LINE#         29
+  C:0632H         LINE#         34
+  C:0634H         LINE#         35
+  C:0637H         LINE#         39
+  C:063AH         LINE#         40
+  C:063CH         LINE#         44
+  -------         ENDPROC       UART_INIT
+  -------         PROC          UART_INTER
+  C:0003H         LINE#         47
+  C:000AH         LINE#         49
+  C:000DH         LINE#         50
+  C:000DH         LINE#         51
+  C:000FH         LINE#         53
+  C:0016H         LINE#         54
+  C:0018H         LINE#         55
+  C:0018H         LINE#         56
+  -------         ENDPROC       UART_INTER
+  -------         PROC          _SEND_DATA
+  D:0007H         SYMBOL        indata
+  C:06C2H         LINE#         61
+  C:06C2H         LINE#         62
+  C:06C2H         LINE#         63
+  C:06C4H         LINE#         64
+  C:06C7H         LINE#         65
+  C:06C9H         LINE#         66
+  -------         ENDPROC       _SEND_DATA
+  -------         PROC          _UART_SEND_BUF
+  D:0004H         SYMBOL        len
+  D:002CH         SYMBOL        packet
+  C:05E1H         LINE#         71
+  C:05EBH         LINE#         72
+  C:05EBH         LINE#         73
+  C:05EFH         LINE#         74
+  C:05EFH         LINE#         75
+  C:0604H         LINE#         76
+  C:0609H         LINE#         77
+  C:060DH         LINE#         78
+  -------         ENDPROC       _UART_SEND_BUF
+  -------         ENDMOD        MCU_STC11L04
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 6
+
+
+
+  -------         MODULE        SI7021
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:04A6H         PUBLIC        _measure_si7021
+  C:063DH         PUBLIC        master_i2c_ack
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:068EH         PUBLIC        start_i2c
+  D:00B8H         PUBLIC        IP
+  B:0090H.1       PUBLIC        SI7021_SDA
+  C:069BH         PUBLIC        stop_i2c
+  C:0688H         PUBLIC        delay_x_us
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:001DH         PUBLIC        master_i2c_noack
+  C:060EH         PUBLIC        read_1byte
+  D:00C8H         PUBLIC        T2CON
+  C:0507H         PUBLIC        _send_1byte
+  B:0090H.0       PUBLIC        SI7021_SCLK
+  D:00D0H         PUBLIC        PSW
+  C:0683H         SYMBOL        L?0036
+  -------         PROC          L?0035
+  -------         ENDPROC       L?0035
+  C:0683H         SYMBOL        L?0036
+  -------         PROC          DELAY_X_US
+  -------         DO            
+  D:0007H         SYMBOL        x
+  -------         ENDDO         
+  C:0688H         LINE#         6
+  C:0688H         LINE#         7
+  C:0688H         LINE#         8
+  C:068AH         LINE#         9
+  C:068AH         LINE#         10
+  C:068DH         LINE#         11
+  -------         ENDPROC       DELAY_X_US
+  -------         PROC          START_I2C
+  C:068EH         LINE#         17
+  C:068EH         LINE#         18
+  C:068EH         LINE#         19
+  C:068EH         LINE#         20
+  C:068EH         LINE#         21
+  C:068EH         LINE#         22
+  C:0691H         LINE#         23
+  C:0693H         LINE#         24
+  C:0696H         LINE#         25
+  C:0698H         LINE#         26
+  -------         ENDPROC       START_I2C
+  -------         PROC          STOP_I2C
+  C:069BH         LINE#         32
+  C:069BH         LINE#         33
+  C:069BH         LINE#         34
+  C:069DH         LINE#         35
+  C:069DH         LINE#         36
+  C:069DH         LINE#         37
+  C:06A0H         LINE#         38
+  C:06A2H         LINE#         39
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 7
+
+
+  -------         ENDPROC       STOP_I2C
+  -------         PROC          _SEND_1BYTE
+  D:0006H         SYMBOL        send_data
+  -------         DO            
+  D:0004H         SYMBOL        bit_cnt
+  B:0020H.0       SYMBOL        b_ack
+  D:0005H         SYMBOL        i
+  -------         ENDDO         
+  C:0507H         LINE#         45
+  C:0509H         LINE#         46
+  C:0509H         LINE#         48
+  C:050BH         LINE#         49
+  C:050DH         LINE#         51
+  C:050FH         LINE#         52
+  C:050FH         LINE#         53
+  C:0511H         LINE#         54
+  C:051EH         LINE#         55
+  C:0522H         LINE#         56
+  C:0524H         LINE#         57
+  C:0524H         LINE#         58
+  C:0524H         LINE#         59
+  C:0527H         LINE#         60
+  C:052BH         LINE#         62
+  C:052EH         LINE#         63
+  C:0530H         LINE#         64
+  C:0532H         LINE#         65
+  C:0535H         LINE#         68
+  C:0535H         LINE#         69
+  C:0535H         LINE#         70
+  C:0538H         LINE#         72
+  C:053AH         LINE#         73
+  C:0540H         LINE#         74
+  C:0540H         LINE#         75
+  C:0543H         LINE#         76
+  C:0546H         LINE#         77
+  C:0546H         LINE#         78
+  C:0548H         LINE#         79
+  C:0548H         LINE#         80
+  C:0548H         LINE#         81
+  C:0548H         LINE#         83
+  C:054DH         LINE#         85
+  C:054FH         LINE#         86
+  C:0552H         LINE#         88
+  C:0554H         LINE#         89
+  -------         ENDPROC       _SEND_1BYTE
+  -------         PROC          READ_1BYTE
+  -------         DO            
+  D:0006H         SYMBOL        read_value
+  D:0005H         SYMBOL        bit_cnt
+  -------         ENDDO         
+  C:060EH         LINE#         95
+  C:060EH         LINE#         96
+  C:060EH         LINE#         97
+  C:0610H         LINE#         100
+  C:0611H         LINE#         101
+  C:0611H         LINE#         102
+  C:0613H         LINE#         103
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 8
+
+
+  C:0616H         LINE#         104
+  C:061AH         LINE#         106
+  C:061DH         LINE#         107
+  C:061EH         LINE#         109
+  C:0620H         LINE#         110
+  C:0624H         LINE#         111
+  C:0626H         LINE#         112
+  -------         ENDPROC       READ_1BYTE
+  -------         PROC          MASTER_I2C_ACK
+  C:063DH         LINE#         117
+  C:063DH         LINE#         118
+  C:063DH         LINE#         119
+  C:063FH         LINE#         120
+  C:0642H         LINE#         121
+  C:0644H         LINE#         122
+  C:0644H         LINE#         123
+  C:0644H         LINE#         124
+  C:0647H         LINE#         125
+  C:0649H         LINE#         126
+  C:064CH         LINE#         127
+  C:064EH         LINE#         128
+  -------         ENDPROC       MASTER_I2C_ACK
+  -------         PROC          MASTER_I2C_NOACK
+  C:001DH         LINE#         134
+  C:001DH         LINE#         135
+  C:001DH         LINE#         136
+  C:001DH         LINE#         137
+  C:001DH         LINE#         138
+  C:001DH         LINE#         139
+  C:0020H         LINE#         140
+  C:0022H         LINE#         141
+  -------         ENDPROC       MASTER_I2C_NOACK
+  -------         PROC          _MEASURE_SI7021
+  D:002CH         SYMBOL        model
+  D:0001H         SYMBOL        value
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:04A6H         LINE#         146
+  C:04A8H         LINE#         147
+  C:04A8H         LINE#         150
+  C:04ABH         LINE#         151
+  C:04B2H         LINE#         152
+  C:04B2H         LINE#         153
+  C:04B9H         LINE#         155
+  C:04B9H         LINE#         157
+  C:04C0H         LINE#         158
+  C:04C0H         LINE#         159
+  C:04C7H         LINE#         161
+  C:04C7H         LINE#         163
+  C:04CBH         LINE#         164
+  C:04D5H         LINE#         165
+  C:04DAH         LINE#         167
+  C:04DDH         LINE#         168
+  C:04E4H         LINE#         169
+  C:04E4H         LINE#         170
+  C:04ECH         LINE#         172
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 9
+
+
+  C:04ECH         LINE#         174
+  C:04F3H         LINE#         176
+  C:04F6H         LINE#         177
+  C:0500H         LINE#         179
+  C:0503H         LINE#         185
+  C:0506H         LINE#         186
+  -------         ENDPROC       _MEASURE_SI7021
+  -------         ENDMOD        SI7021
+
+  -------         MODULE        LCD
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:0330H         PUBLIC        _hex_to_assic
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0659H         PUBLIC        _delay_2us
+  D:00B8H         PUBLIC        IP
+  C:059BH         PUBLIC        _lcd_printf_string
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:06AFH         PUBLIC        _lcd_write_data
+  B:00A0H.0       PUBLIC        LCD_EN
+  C:0664H         PUBLIC        lcd_wait
+  C:0555H         PUBLIC        ini_lcd
+  B:00A0H.1       PUBLIC        LCD_RS
+  B:00A0H.2       PUBLIC        LCD_RW
+  C:06A5H         PUBLIC        _lcd_write_reg
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INI_LCD
+  C:0555H         LINE#         36
+  C:0555H         LINE#         37
+  C:0555H         LINE#         38
+  C:055AH         LINE#         39
+  C:055FH         LINE#         40
+  C:0564H         LINE#         41
+  C:0569H         LINE#         42
+  C:056CH         LINE#         43
+  C:0571H         LINE#         44
+  C:0574H         LINE#         45
+  C:057BH         LINE#         47
+  C:0580H         LINE#         48
+  C:0583H         LINE#         49
+  C:0588H         LINE#         50
+  C:058BH         LINE#         51
+  C:0590H         LINE#         52
+  C:0593H         LINE#         53
+  C:0598H         LINE#         54
+  -------         ENDPROC       INI_LCD
+  -------         PROC          _LCD_PRINTF_STRING
+  D:002CH         SYMBOL        disp_str
+  D:0005H         SYMBOL        row_len_col
+  -------         DO            
+  D:002FH         SYMBOL        i
+  D:0030H         SYMBOL        len
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 10
+
+
+  -------         ENDDO         
+  C:059BH         LINE#         72
+  C:05A1H         LINE#         73
+  C:05A1H         LINE#         74
+  C:05A4H         LINE#         75
+  C:05A6H         LINE#         77
+  C:05B0H         LINE#         79
+  C:05B7H         LINE#         80
+  C:05BAH         LINE#         82
+  C:05C4H         LINE#         83
+  C:05C4H         LINE#         84
+  C:05D9H         LINE#         85
+  C:05DCH         LINE#         86
+  C:05E0H         LINE#         87
+  -------         ENDPROC       _LCD_PRINTF_STRING
+  -------         PROC          _LCD_WRITE_REG
+  D:0007H         SYMBOL        command
+  C:06A5H         LINE#         119
+  C:06A5H         LINE#         120
+  C:06A5H         LINE#         121
+  C:06A7H         LINE#         122
+  C:06A9H         LINE#         123
+  C:06A9H         LINE#         124
+  C:06A9H         LINE#         125
+  C:06ACH         LINE#         126
+  C:06AEH         LINE#         127
+  -------         ENDPROC       _LCD_WRITE_REG
+  -------         PROC          _LCD_WRITE_DATA
+  D:0007H         SYMBOL        value
+  C:06AFH         LINE#         139
+  C:06AFH         LINE#         140
+  C:06AFH         LINE#         141
+  C:06B1H         LINE#         142
+  C:06B3H         LINE#         143
+  C:06B3H         LINE#         144
+  C:06B3H         LINE#         145
+  C:06B6H         LINE#         146
+  C:06B8H         LINE#         147
+  -------         ENDPROC       _LCD_WRITE_DATA
+  -------         PROC          LCD_WAIT
+  -------         DO            
+  D:0007H         SYMBOL        value
+  -------         ENDDO         
+  C:0664H         LINE#         158
+  C:0664H         LINE#         159
+  C:0664H         LINE#         160
+  C:0664H         LINE#         163
+  C:0664H         LINE#         164
+  C:0666H         LINE#         165
+  C:0668H         LINE#         166
+  C:066AH         LINE#         167
+  C:066CH         LINE#         168
+  C:066EH         LINE#         169
+  C:0672H         LINE#         170
+  -------         ENDPROC       LCD_WAIT
+  -------         PROC          L?0034
+  -------         ENDPROC       L?0034
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 11
+
+
+  -------         PROC          _DELAY_2US
+  D:0006H         SYMBOL        delay_cnt
+  C:0659H         LINE#         181
+  C:0659H         LINE#         182
+  C:0659H         LINE#         183
+  C:0663H         LINE#         184
+  -------         ENDPROC       _DELAY_2US
+  -------         PROC          _HEX_TO_ASSIC
+  D:0007H         SYMBOL        hex_data
+  D:002CH         SYMBOL        str
+  C:0330H         LINE#         186
+  C:0336H         LINE#         187
+  C:0336H         LINE#         188
+  C:033CH         LINE#         189
+  C:033CH         LINE#         190
+  C:034EH         LINE#         191
+  C:0361H         LINE#         192
+  C:036DH         LINE#         193
+  C:036FH         LINE#         194
+  C:0375H         LINE#         195
+  C:0375H         LINE#         196
+  C:038FH         LINE#         197
+  C:03ABH         LINE#         198
+  C:03BBH         LINE#         199
+  C:03BDH         LINE#         200
+  C:03C3H         LINE#         201
+  C:03C3H         LINE#         202
+  C:03DDH         LINE#         203
+  C:03FDH         LINE#         204
+  C:0419H         LINE#         205
+  C:0419H         LINE#         206
+  -------         ENDPROC       _HEX_TO_ASSIC
+  -------         ENDMOD        LCD
+
+  -------         MODULE        ?C?CLDPTR
+  C:0026H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:003FH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?CSTOPTR
+  C:0051H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+  -------         MODULE        ?C?ISTPTR
+  C:0073H         PUBLIC        ?C?ISTPTR
+  -------         ENDMOD        ?C?ISTPTR
+
+  -------         MODULE        ?C?LMUL
+  C:0092H         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:011DH         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/11/2015  10:27:34  PAGE 12
+
+
+
+  -------         MODULE        ?C?ULSHR
+  C:01AFH         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+
+
+INTER-MODULE CROSS-REFERENCE LISTING
+------------------------------------
+
+
+NAME . . . . . . . . USAGE    MODULE NAMES
+------------------------------------------
+
+?C?CLDPTR. . . . . . CODE;    ?C?CLDPTR  LCD  MCU_STC11L04  
+?C?CSTOPTR . . . . . CODE;    ?C?CSTOPTR  SI7021  
+?C?CSTPTR. . . . . . CODE;    ?C?CSTPTR  LCD  SI7021  
+?C?ISTPTR. . . . . . CODE;    ?C?ISTPTR  SI7021  
+?C?LMUL. . . . . . . CODE;    ?C?LMUL  USER_MAIN  
+?C?ULDIV . . . . . . CODE;    ?C?ULDIV  USER_MAIN  
+?C?ULSHR . . . . . . CODE;    ?C?ULSHR  USER_MAIN  
+?C_INITSEGSTART. . . CODE;    ** L51 GENERATED **  
+?C_START . . . . . . CODE;    ?C_INIT  ?C_STARTUP  
+?C_STARTUP . . . . . CODE;    ?C_STARTUP  USER_MAIN  
+CAL_TEMP_U16 . . . . DATA;    USER_MAIN  
+CAL_TEMP_U32 . . . . DATA;    USER_MAIN  
+DELAY_X_US . . . . . CODE;    SI7021  
+GV_SI7021_VALUE. . . DATA;    USER_MAIN  
+GV_UART_BUF. . . . . DATA;    MCU_STC11L04  USER_MAIN  
+GV_UART_BUFLEN . . . DATA;    MCU_STC11L04  USER_MAIN  
+INI_LCD. . . . . . . CODE;    LCD  USER_MAIN  
+LCD_WAIT . . . . . . CODE;    LCD  
+MAIN . . . . . . . . CODE;    USER_MAIN  ?C_INIT  
+MASTER_I2C_ACK . . . CODE;    SI7021  
+MASTER_I2C_NOACK . . CODE;    SI7021  
+READ_1BYTE . . . . . CODE;    SI7021  
+RF_REC_CNT . . . . . DATA;    USER_MAIN  
+RH_VALUE . . . . . . DATA;    USER_MAIN  
+START_I2C. . . . . . CODE;    SI7021  
+STOP_I2C . . . . . . CODE;    SI7021  
+TEMP_ARRAY . . . . . DATA;    USER_MAIN  
+TEMP_H . . . . . . . DATA;    USER_MAIN  
+TEMP_L . . . . . . . DATA;    USER_MAIN  
+UART_INIT. . . . . . CODE;    MCU_STC11L04  USER_MAIN  
+UART_INTER . . . . . CODE;    MCU_STC11L04  
+_DELAY_2US . . . . . CODE;    LCD  USER_MAIN  
+_HEX_TO_ASSIC. . . . CODE;    LCD  USER_MAIN  
+_LCD_PRINTF_STRING . CODE;    LCD  USER_MAIN  
+_LCD_WRITE_DATA. . . CODE;    LCD  
+_LCD_WRITE_REG . . . CODE;    LCD  
+_MEASURE_SI7021. . . CODE;    SI7021  USER_MAIN  
+_SEND_1BYTE. . . . . CODE;    SI7021  
+_SEND_DATA . . . . . CODE;    MCU_STC11L04  
+_UART_SEND_BUF . . . CODE;    MCU_STC11L04  USER_MAIN  
+
+Program Size: data=48.1 xdata=0 code=1738
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
