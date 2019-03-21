@@ -54,7 +54,7 @@ void loop() {
     Serial.print( "Lux: ");
     Serial.print( ((float)Lux)/100);
     Serial.println(" lux");
-    delay(200); 
+    delay(2000); 
 }
 void get_bme(void)
 {
