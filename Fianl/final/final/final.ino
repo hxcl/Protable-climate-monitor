@@ -1,7 +1,8 @@
 #include<Arduino.h>
 #include <U8g2lib.h>
 #include <Wire.h>
-
+#include "SHTSensor.h"
+SHTSensor sht;//温湿度传感器的对象
 int BH1750address=0x23;//光强传感器地址
 byte buff[2];
 int UVOUT = A0; //Output from the sensor
@@ -70,45 +71,14 @@ void firstDisplay(){
   delay(1500);
 }
 
-void tem_hum(float &X,float &Y)
+void tem_hum(float &x,float &y)
 {
-  pinMode(13,OUTPUT); 
-  const  int  ADDR =0x40;
-  int  X0,Y0,Y1;
-  float  Y_out1,Y_out2;
-  Wire.beginTransmission(ADDR);
-  Wire.endTransmission();
-  Wire.beginTransmission(ADDR);
-  Wire.write(0xE3);
-  Wire.endTransmission();
-  digitalWrite(13,HIGH);  
-  Wire.requestFrom(ADDR,2);
- 
-  if (Wire.available()<=2);
-  {
-    X0 = Wire.read();
-    X0 = X0<<8;
-    X +=X0;
-    X0 = Wire.read();
-    X +=X0;
-  }
-  X=175.72*X/65536-46.85;                                        
-  Wire.beginTransmission(ADDR);                     
-  Wire.write(0xE5);
-  Wire.endTransmission(); 
-
-  Wire.requestFrom(ADDR,2);
-  if (Wire.available()<=2);
-  {
-    Y0 = Wire.read();
-    Y1=Y0/100; 
-    Y_out1 = Y1*25600;
-    Y0=Y0%100;
-    Y1 = Wire.read();
-    Y_out2 = Y0*256+Y1;
-  }
-  Y = (125*Y_out1)/65536+(125*Y_out2)/65536-6;
-  digitalWrite(13,LOW);                          
+      if (sht.init());
+      sht.setAccuracy(SHTSensor::SHT_ACCURACY_MEDIUM); 
+      if (sht.readSample())
+	{
+	   y=sht.getHumidity();x=sht.getTemperature();
+	}
 }
 
 void uv(float &uvIntensity)
