@@ -28,9 +28,10 @@ void loop() {
   u8g2.drawFrame(4,4,120,56);
   u8g2.drawHLine(4,32,120);
   u8g2.drawVLine(64,4,56);
-  float X,Y,Z;
+  float X,Y,Z,L;
   tem_hum(X,Y); //X是 温度，Y是湿度
   uv(Z); //紫外线指数
+  L=light();
   if(UVMAX<Z){
     UVMAX=Z;
   }
@@ -47,7 +48,7 @@ void loop() {
   u8g2.setCursor(6,41);
   u8g2.print("Lux:");
   u8g2.setCursor(6,54);
-  u8g2.print(light());
+  u8g2.print(L);
   
   u8g2.setCursor(66,41);
   u8g2.print("UV:");
