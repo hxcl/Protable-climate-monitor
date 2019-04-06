@@ -32,6 +32,7 @@ void loop() {
   tem_hum(X,Y); //X是 温度，Y是湿度
   uv(Z); //紫外线指数
   L=light();
+  Trans(L);
   if(UVMAX<Z){
     UVMAX=Z;
   }
@@ -72,6 +73,12 @@ void firstDisplay(){
   delay(1500);
 }
 
+void Trans(float L)
+{
+  Wire.beginTransmission(0x99);//括号内补充从机地址
+  Wire.write(L);
+  Wire.endTransmission();
+}
 void tem_hum(float &x,float &y)
 {
       if (sht.init());
