@@ -9,11 +9,17 @@ int UVOUT = A0; //Output from the sensor
 int REF_3V3 = A1; //3.3V power on the Arduino board
 unsigned int time=0;
 float Lux,Tem,Hum,Uv,UVMAX=0;
+float X=0,Y=0,Z=0;  //温湿度X是温度，Y是湿度，Z是紫外线
 
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
+ union temp
+{
+  float Float;
+  byte Byte[4];
+}temp1;
+
 void setup() {
-  Serial.begin(9600);
   u8g2.setI2CAddress(0x78);//屏幕地址
   u8g2.begin();
   Wire.begin();
@@ -21,18 +27,19 @@ void setup() {
 
 void loop() {
   firstDisplay();
-  // put your main code here, to run repeatedly:
   u8g2.setFont(u8g2_font_victoriabold8_8r);
   while(1){
   u8g2.clearBuffer();
   u8g2.drawFrame(4,4,120,56);
   u8g2.drawHLine(4,32,120);
-  u8g2.drawVLine(64,4,56);
-  float X,Y,Z,L;
-  tem_hum(X,Y); //X是 温度，Y是湿度
-  uv(Z); //紫外线指数
-  L=light();
-  if(UVMAX<Z){
+  u8g2.drawVLine(64,4,56);  //以上是屏幕初始化
+  int L=0;
+  tem_hum(X,Y);         //读取温湿度X是温度，Y是湿度
+  uv(Z);            //读取紫外线指数
+  L=light();          //读取光强
+  Trans();          //传输光强
+  if(UVMAX<Z)         //以下是屏幕显示
+{
     UVMAX=Z;
   }
   u8g2.setCursor(6,13);
@@ -55,7 +62,11 @@ void loop() {
   u8g2.setCursor(66,54);
   u8g2.print(UVMAX);
   u8g2.sendBuffer();
-  delay(500);
+  Serial.print(X);
+  Serial.print(Y);
+  Serial.print(L);
+  Serial.print(Z);
+  delay(2000);
   }
 }
 
@@ -72,17 +83,39 @@ void firstDisplay(){
   delay(1500);
 }
 
-void tem_hum(float &x,float &y)
+void Trans()             //传输函数
+{
+  Wire.beginTransmission(0x99);//括号内补充从机地址
+  Wire.write(buff [0]);
+  Wire.write(buff [1]);
+  temp1.Float=X;
+  for(int i=0;i<4;i++)
+  {
+    Wire.write(temp1.Byte[i]);
+  }
+  temp1.Float=Y;
+  for(int i=0;i<4;i++)
+  {
+    Wire.write(temp1.Byte[i]);
+  }
+  temp1.Float=Z;
+  for(int i=0;i<4;i++)
+  {
+    Wire.write(temp1.Byte[i]);
+  }
+  Wire.endTransmission();
+}
+void tem_hum(float &x,float &y)   //获取温湿度函数
 {
       if (sht.init());
       sht.setAccuracy(SHTSensor::SHT_ACCURACY_MEDIUM); 
       if (sht.readSample())
-	{
-	   y=sht.getHumidity();x=sht.getTemperature();
-	}
+  {
+     y=sht.getHumidity();x=sht.getTemperature();
+  }
 }
 
-void uv(float &uvIntensity)
+void uv(float &uvIntensity)       //获取紫外线函数
 {
   int uvLevel = averageAnalogRead(UVOUT);
   int refLevel = averageAnalogRead(REF_3V3);
@@ -108,14 +141,14 @@ int averageAnalogRead(int pinToRead)
   return(runningValue);  
 }
 
-int light(){
+int light(){                //获取光强函数
   int i;
   double lux=0;
   
   BH1750_Init(BH1750address);
 
   if(2==BH1750_Read(BH1750address)){
-    lux=((buff[0]<<8)|buff[1])/1.2;
+    lux=((buff[0]<<8)|buff[1])/1.2;     //数据处理
   }
   return lux;
 }
