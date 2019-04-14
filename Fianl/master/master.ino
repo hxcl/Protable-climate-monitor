@@ -32,6 +32,7 @@ void loop() {
   u8g2.clearBuffer();
   u8g2.drawFrame(4,4,120,56);
   u8g2.drawHLine(4,32,120);
+<<<<<<< HEAD:Fianl/master/master.ino
   u8g2.drawVLine(64,4,56);  //以上是屏幕初始化
   int L=0;
   tem_hum(X,Y);         //读取温湿度X是温度，Y是湿度
@@ -40,6 +41,15 @@ void loop() {
   Trans();          //传输光强
   if(UVMAX<Z)         //以下是屏幕显示
 {
+=======
+  u8g2.drawVLine(64,4,56);
+  float X,Y,Z,L;
+  tem_hum(X,Y); //X是 温度，Y是湿度
+  uv(Z); //紫外线指数
+  L=light();
+  Trans(L);
+  if(UVMAX<Z){
+>>>>>>> fbb4e21a897d8417279d5b63020e6a6ca6c39ab8:Fianl/final/final/final.ino
     UVMAX=Z;
   }
   u8g2.setCursor(6,13);
@@ -83,6 +93,7 @@ void firstDisplay(){
   delay(1500);
 }
 
+<<<<<<< HEAD:Fianl/master/master.ino
 void Trans()             //传输函数
 {
   Wire.beginTransmission(0x99);//括号内补充从机地址
@@ -106,6 +117,15 @@ void Trans()             //传输函数
   Wire.endTransmission();
 }
 void tem_hum(float &x,float &y)   //获取温湿度函数
+=======
+void Trans(float L)
+{
+  Wire.beginTransmission(0x99);//括号内补充从机地址
+  Wire.write(L);
+  Wire.endTransmission();
+}
+void tem_hum(float &x,float &y)
+>>>>>>> fbb4e21a897d8417279d5b63020e6a6ca6c39ab8:Fianl/final/final/final.ino
 {
       if (sht.init());
       sht.setAccuracy(SHTSensor::SHT_ACCURACY_MEDIUM); 
